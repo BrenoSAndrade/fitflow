@@ -7,7 +7,7 @@ import { usarSessao } from '../contextos/Sessao';
 
 export default function Entrada() {
   const [perfil, definirPerfil] = useState('aluno');
-  const { entrar } = usarSessao();
+  const { entrar, ocupado } = usarSessao();
 
   return (
     <SafeAreaView style={estilos.tela}>
@@ -27,7 +27,7 @@ export default function Entrada() {
           ))}
         </View>
         <Text style={estilos.descricao}>Escolha um perfil para conhecer as telas.</Text>
-        <Botao titulo="Entrar na demonstração" aoPressionar={() => entrar(perfil)} />
+        <Botao titulo={ocupado ? 'Entrando...' : 'Entrar na demonstração'} desabilitado={ocupado} aoPressionar={() => entrar(perfil)} />
       </View>
     </SafeAreaView>
   );

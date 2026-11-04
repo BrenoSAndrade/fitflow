@@ -37,13 +37,13 @@ function AbasAluno() {
 }
 
 export default function Navegacao() {
-  const { perfil, sair } = usarSessao();
+  const { perfil, sair, ocupado } = usarSessao();
   return (
     <NavigationContainer theme={tema}>
       <Pilha.Navigator screenOptions={{
         animation: 'none',
         headerRight: () => perfil ? (
-          <Pressable accessibilityRole="button" onPress={sair} hitSlop={12} style={{ padding: 8 }}>
+          <Pressable accessibilityRole="button" disabled={ocupado} onPress={sair} hitSlop={12} style={{ padding: 8 }}>
             <Text style={{ color: cores.verde, fontSize: 15 }}>Sair</Text>
           </Pressable>
         ) : null,

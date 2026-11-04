@@ -1,12 +1,14 @@
 import { Pressable, StyleSheet, Text } from 'react-native';
 import { cores } from './tema';
 
-export default function Botao({ titulo, aoPressionar, secundario = false }) {
+export default function Botao({ titulo, aoPressionar, secundario = false, desabilitado = false }) {
   return (
     <Pressable
       accessibilityRole="button"
+      accessibilityState={{ disabled: desabilitado }}
+      disabled={desabilitado}
       onPress={aoPressionar}
-      style={({ pressed: pressionado }) => [estilos.botao, secundario && estilos.secundario, pressionado && estilos.pressionado]}
+      style={({ pressed: pressionado }) => [estilos.botao, secundario && estilos.secundario, (pressionado || desabilitado) && estilos.pressionado]}
     >
       <Text style={[estilos.texto, secundario && estilos.textoSecundario]}>{titulo}</Text>
     </Pressable>
