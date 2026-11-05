@@ -5,7 +5,7 @@ import { cores } from './tema';
 export default function Tela({ titulo, descricao, children: conteudo }) {
   return (
     <SafeAreaView style={estilos.fundo} edges={['left', 'right', 'bottom']}>
-      <ScrollView contentContainerStyle={estilos.conteudo} keyboardShouldPersistTaps="handled">
+      <ScrollView contentContainerStyle={estilos.conteudo} keyboardShouldPersistTaps="handled" automaticallyAdjustKeyboardInsets keyboardDismissMode="on-drag">
         <Text accessibilityRole="header" style={estilos.titulo}>{titulo}</Text>
         {descricao ? <Text style={estilos.descricao}>{descricao}</Text> : null}
         {conteudo}
