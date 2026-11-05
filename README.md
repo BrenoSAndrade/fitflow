@@ -50,7 +50,9 @@ Para o emulador, instale o Android Studio, o Android SDK Platform-Tools e o Andr
 
 Entrada de demonstração com escolha de perfil e saída. O aluno acessa início, aulas e estatísticas. O funcionário acessa a grade e a tela de criação de aulas.
 
-As telas ainda são espaços para as próximas funcionalidades. A entrada continua sendo uma demonstração, sem autenticação por senha. O perfil escolhido é recuperado ao abrir novamente o aplicativo. Use Sair para apagar essa sessão.
+O funcionário pode cadastrar aulas com nome, instrutor, data, horário e vagas. A grade é atualizada ao retornar e permite excluir uma aula após confirmação.
+
+A entrada continua sendo uma demonstração, sem autenticação por senha. O perfil escolhido é recuperado ao abrir novamente o aplicativo. Use Sair para apagar essa sessão. As reservas e os treinos do aluno ainda serão conectados às telas.
 
 ## Persistência
 
@@ -58,7 +60,7 @@ No Android e no iOS, o SQLite guarda aulas, reservas e treinos. A sessão usa Se
 
 As funções de cadastro, consulta, reserva e registro de treinos estão na pasta banco. Cada reserva pertence a um aluno, não pode ser repetida e depende de vaga disponível. Excluir uma aula também remove suas reservas. O histórico guarda os exercícios e a duração de cada treino.
 
-Os formulários e checklists ainda serão conectados a essas funções. Nesta etapa, o banco é preparado ao iniciar o aplicativo.
+O cadastro e a grade do funcionário usam o banco, preparado ao iniciar o aplicativo. O formulário recebe datas no formato DD/MM/AAAA e horários no formato HH:MM. Somente aulas futuras podem ser cadastradas pelo formulário.
 
 O navegador permite conferir a interface e guarda somente o perfil de demonstração no AsyncStorage. O banco desta versão é usado no Android e no iOS. Os dados são locais e não são sincronizados entre celulares.
 

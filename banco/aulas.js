@@ -17,6 +17,15 @@ export async function criarAula({ nome, instrutor, data, horario, capacidade }) 
   return resultado.lastInsertRowId;
 }
 
+export async function listarGrade() {
+  const banco = await abrirBanco();
+  return banco.getAllAsync(`
+    SELECT aulas.*,
+      capacidade - (SELECT COUNT(*) FROM reservas WHERE aula_id = aulas.id) AS vagas
+    FROM aulas ORDER BY data, horario, id
+  `);
+}
+
 export async function listarAulas(aluno) {
   const alunoValido = validarTexto(aluno, 'o aluno');
   const banco = await abrirBanco();
