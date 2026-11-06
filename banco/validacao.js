@@ -29,3 +29,15 @@ export function formatarData(data) {
   const dia = String(data.getDate()).padStart(2, '0');
   return `${ano}-${mes}-${dia}`;
 }
+
+export function validarExercicios(exercicios) {
+  if (!Array.isArray(exercicios) || !exercicios.length) {
+    throw new Error('Informe os exercícios do treino.');
+  }
+  return exercicios.map((exercicio) => ({
+    nome: validarTexto(exercicio?.nome, 'o nome do exercício'),
+    series: validarNumero(exercicio?.series, 'a quantidade de séries'),
+    repeticoes: validarNumero(exercicio?.repeticoes, 'a quantidade de repetições'),
+    concluido: exercicio.concluido === true,
+  }));
+}
