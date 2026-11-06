@@ -76,7 +76,7 @@ export function ProvedorSessao({ children: conteudo }) {
   }
 
   return (
-    <ContextoSessao.Provider value={{ perfil, entrar, sair, ocupado }}>
+    <ContextoSessao.Provider value={{ perfil, aluno: perfil === 'aluno' ? 'aluno-demonstracao' : null, entrar, sair, ocupado }}>
       {conteudo}
     </ContextoSessao.Provider>
   );

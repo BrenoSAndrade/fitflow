@@ -52,7 +52,9 @@ Entrada de demonstração com escolha de perfil e saída. O aluno acessa início
 
 O funcionário pode cadastrar aulas com nome, instrutor, data, horário e vagas. A grade é atualizada ao retornar e permite excluir uma aula após confirmação.
 
-A entrada continua sendo uma demonstração, sem autenticação por senha. O perfil escolhido é recuperado ao abrir novamente o aplicativo. Use Sair para apagar essa sessão. As reservas e os treinos do aluno ainda serão conectados às telas.
+O aluno pode consultar aulas futuras, reservar uma vaga e cancelar uma reserva após confirmação. A próxima aula reservada aparece no início. As vagas são atualizadas depois de cada alteração.
+
+A entrada continua sendo uma demonstração, sem autenticação por senha. O perfil escolhido é recuperado ao abrir novamente o aplicativo. Use Sair para apagar essa sessão. As reservas do modo demonstração pertencem ao mesmo aluno neste aparelho. O checklist, o registro de treinos e as estatísticas ainda serão conectados às telas.
 
 ## Persistência
 
