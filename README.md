@@ -62,6 +62,12 @@ No Android e no iOS, o SQLite guarda aulas, reservas e treinos. A sessão usa Se
 
 As funções de cadastro, consulta, reserva e registro de treinos estão na pasta banco. Cada reserva pertence a um aluno, não pode ser repetida e depende de vaga disponível. Excluir uma aula também remove suas reservas. O histórico guarda os exercícios e a duração de cada treino.
 
+As funções de treino também guardam o início e o checklist em andamento. Iniciar novamente recupera o treino existente. Ao finalizar, o histórico é salvo e o progresso é removido juntos. Descartar o progresso não altera o histórico.
+
+As consultas de estatísticas retornam o total de treinos e os sete dias da semana, de segunda a domingo, com minutos e frequência. Apenas treinos concluídos entram nesses números. A duração é o tempo entre início e fim, inclusive fora do aplicativo, e é atribuída ao dia da conclusão.
+
+Essas funções de progresso e estatísticas ainda serão conectadas às telas.
+
 O cadastro e a grade do funcionário usam o banco, preparado ao iniciar o aplicativo. O formulário recebe datas no formato DD/MM/AAAA e horários no formato HH:MM. Somente aulas futuras podem ser cadastradas pelo formulário.
 
 O navegador permite conferir a interface e guarda somente o perfil de demonstração no AsyncStorage. O banco desta versão é usado no Android e no iOS. Os dados são locais e não são sincronizados entre celulares.
