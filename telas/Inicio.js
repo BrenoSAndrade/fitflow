@@ -3,6 +3,7 @@ import { ActivityIndicator, Platform, StyleSheet, Text, View } from 'react-nativ
 import { useFocusEffect } from '@react-navigation/native';
 import Tela from '../componentes/Tela';
 import Botao from '../componentes/Botao';
+import TreinoDia from '../componentes/TreinoDia';
 import { cores } from '../componentes/tema';
 import { usarSessao } from '../contextos/Sessao';
 import { buscarProximaAula } from '../servicos/aulasAluno';
@@ -35,7 +36,7 @@ export default function Inicio({ navigation: navegacao }) {
   }, [aluno, tentativa]));
 
   return (
-    <Tela titulo="Início" descricao="Acompanhe suas aulas reservadas.">
+    <Tela titulo="Início" descricao="Acompanhe suas aulas e seu treino.">
       {Platform.OS !== 'web' ? (
         <View style={estilos.aula}>
           <Text style={estilos.titulo}>Próxima aula</Text>
@@ -54,6 +55,7 @@ export default function Inicio({ navigation: navegacao }) {
           ) : <Text style={estilos.texto}>Você ainda não tem uma próxima aula reservada.</Text>}
         </View>
       ) : <Text style={estilos.texto}>Suas reservas ficam disponíveis no aplicativo do celular.</Text>}
+      <TreinoDia />
       <Botao titulo="Ver aulas" aoPressionar={() => navegacao.navigate('Aulas')} />
       <Botao titulo="Ver estatísticas" secundario aoPressionar={() => navegacao.navigate('Estatísticas')} />
     </Tela>

@@ -54,7 +54,9 @@ O funcionário pode cadastrar aulas com nome, instrutor, data, horário e vagas.
 
 O aluno pode consultar aulas futuras, reservar uma vaga e cancelar uma reserva após confirmação. A próxima aula reservada aparece no início. As vagas são atualizadas depois de cada alteração.
 
-A entrada continua sendo uma demonstração, sem autenticação por senha. O perfil escolhido é recuperado ao abrir novamente o aplicativo. Use Sair para apagar essa sessão. As reservas do modo demonstração pertencem ao mesmo aluno neste aparelho. O checklist, o registro de treinos e as estatísticas ainda serão conectados às telas.
+A entrada continua sendo uma demonstração, sem autenticação por senha. O perfil escolhido é recuperado ao abrir novamente o aplicativo. Use Sair para apagar essa sessão. As reservas e os treinos do modo demonstração pertencem ao mesmo aluno neste aparelho.
+
+No início, o aluno pode iniciar o treino e marcar os exercícios. O progresso é recuperado ao reabrir o aplicativo. Finalizar salva o histórico e mostra a duração; descartar apaga somente o progresso atual. É necessário marcar pelo menos um exercício para finalizar. A tela de estatísticas ainda será conectada aos dados.
 
 ## Persistência
 
@@ -66,7 +68,7 @@ As funções de treino também guardam o início e o checklist em andamento. Ini
 
 As consultas de estatísticas retornam o total de treinos e os sete dias da semana, de segunda a domingo, com minutos e frequência. Apenas treinos concluídos entram nesses números. A duração é o tempo entre início e fim, inclusive fora do aplicativo, e é atribuída ao dia da conclusão.
 
-Essas funções de progresso e estatísticas ainda serão conectadas às telas.
+O progresso já está conectado ao checklist do início. As consultas das estatísticas ainda serão conectadas à tela correspondente.
 
 O cadastro e a grade do funcionário usam o banco, preparado ao iniciar o aplicativo. O formulário recebe datas no formato DD/MM/AAAA e horários no formato HH:MM. Somente aulas futuras podem ser cadastradas pelo formulário.
 
