@@ -1,28 +1,28 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Alert, Platform, StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { prepararContasLocais } from '../servicos/contasLocais';
+import { autenticarUsuario, encerrarSessaoUsuario, prepararContasLocais, recuperarUsuario } from '../servicos/contasLocais';
 import Botao from '../componentes/Botao';
 import { cores } from '../componentes/tema';
-import { apagarSessao, lerSessao, salvarSessao } from '../servicos/sessao';
+import { apagarSessao } from '../servicos/sessao';
 
 const ContextoSessao = createContext(null);
 
 export function ProvedorSessao({ children: conteudo }) {
-  const [perfil, definirPerfil] = useState(null);
+  const [usuario, definirUsuario] = useState(null);
   const [carregando, definirCarregando] = useState(true);
   const [ocupado, definirOcupado] = useState(false);
   const [erro, definirErro] = useState(false);
+  const operacaoEmAndamento = useRef(false);
+  const perfil = usuario ? usuario.perfil : null;
 
   async function carregarDados() {
     definirCarregando(true);
     definirErro(false);
     try {
-      const [perfilSalvo] = await Promise.all([
-        lerSessao(),
-        Platform.OS === 'web' ? Promise.resolve() : prepararContasLocais(),
-      ]);
-      definirPerfil(perfilSalvo);
+      if (Platform.OS !== 'web') await prepararContasLocais();
+      await apagarSessao();
+      definirUsuario(await recuperarUsuario());
     } catch {
       definirErro(true);
     } finally {
@@ -34,28 +34,31 @@ export function ProvedorSessao({ children: conteudo }) {
     carregarDados();
   }, []);
 
-  async function entrar(novoPerfil) {
-    if (ocupado) return;
+  async function entrar(email, senha, perfilEscolhido) {
+    if (operacaoEmAndamento.current) return false;
+    operacaoEmAndamento.current = true;
     definirOcupado(true);
     try {
-      await salvarSessao(novoPerfil);
-      definirPerfil(novoPerfil);
-    } catch {
-      Alert.alert('Não foi possível entrar', 'Tente novamente.');
+      const conta = await autenticarUsuario(email, senha, perfilEscolhido);
+      definirUsuario(conta);
+      return true;
     } finally {
+      operacaoEmAndamento.current = false;
       definirOcupado(false);
     }
   }
 
   async function sair() {
-    if (ocupado) return;
+    if (operacaoEmAndamento.current) return;
+    operacaoEmAndamento.current = true;
     definirOcupado(true);
     try {
-      await apagarSessao();
-      definirPerfil(null);
+      await encerrarSessaoUsuario();
+      definirUsuario(null);
     } catch {
       Alert.alert('Não foi possível sair', 'Tente novamente.');
     } finally {
+      operacaoEmAndamento.current = false;
       definirOcupado(false);
     }
   }
@@ -76,7 +79,7 @@ export function ProvedorSessao({ children: conteudo }) {
   }
 
   return (
-    <ContextoSessao.Provider value={{ perfil, aluno: perfil === 'aluno' ? 'aluno-demonstracao' : null, entrar, sair, ocupado }}>
+    <ContextoSessao.Provider value={{ usuario, perfil, aluno: perfil === 'aluno' ? usuario.id : null, entrar, sair, ocupado }}>
       {conteudo}
     </ContextoSessao.Provider>
   );
