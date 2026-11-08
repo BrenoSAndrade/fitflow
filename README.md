@@ -54,7 +54,7 @@ O funcionário pode cadastrar aulas com nome, instrutor, data, horário e vagas.
 
 O aluno pode consultar aulas futuras, reservar uma vaga e cancelar uma reserva após confirmação. A próxima aula reservada aparece no início. As vagas são atualizadas depois de cada alteração.
 
-A entrada continua sendo uma demonstração, sem autenticação por senha. O perfil escolhido é recuperado ao abrir novamente o aplicativo. Use Sair para apagar essa sessão. As reservas e os treinos do modo demonstração pertencem ao mesmo aluno neste aparelho.
+A entrada pede perfil, e-mail e senha das contas locais de demonstração. O perfil deve corresponder à conta. A conta conectada é recuperada ao abrir novamente o aplicativo. Use Sair para apagar a sessão. As reservas e os treinos pertencem à identificação do aluno e são mantidos ao sair.
 
 No início, o aluno pode iniciar o treino e marcar os exercícios. O progresso é recuperado ao reabrir o aplicativo. Finalizar salva o histórico e mostra a duração; descartar apaga somente o progresso atual. É necessário marcar pelo menos um exercício para finalizar. A tela de estatísticas ainda será conectada aos dados.
 
@@ -72,11 +72,11 @@ O progresso já está conectado ao checklist do início. As consultas das estat�
 
 O cadastro e a grade do funcionário usam o banco, preparado ao iniciar o aplicativo. O formulário recebe datas no formato DD/MM/AAAA e horários no formato HH:MM. Somente aulas futuras podem ser cadastradas pelo formulário.
 
-O navegador permite conferir a interface e guarda somente o perfil de demonstração no AsyncStorage. O banco desta versão é usado no Android e no iOS. Os dados são locais e não são sincronizados entre celulares.
+O navegador permite conferir o formulário de entrada. O login e o banco desta versão são usados no Android e no iOS. Os dados são locais e não são sincronizados entre celulares.
 
 ## Contas locais
 
-As funções de contas estão preparadas, mas ainda serão conectadas ao formulário de entrada. Há duas contas de demonstração, sem cadastro de novos usuários:
+Há duas contas de demonstração para usar no formulário de entrada, sem cadastro de novos usuários:
 
 | Perfil | E-mail | Senha de demonstração |
 | --- | --- | --- |
@@ -86,6 +86,8 @@ As funções de contas estão preparadas, mas ainda serão conectadas ao formul�
 A tabela usuarios guarda identificação, nome, e-mail e perfil. As senhas ficam no SecureStore. O perfil escolhido deve corresponder à conta. A sessão da conta guarda somente sua identificação e recupera os dados pelo banco.
 
 O aluno local mantém a identificação das reservas e dos treinos de demonstração já existentes. As contas são locais ao aparelho, sem autenticação em servidor.
+
+Na primeira abertura desta versão, a sessão antiga que guardava somente o perfil é ignorada. Entre com uma das contas acima. Depois disso, a sessão da conta é recuperada normalmente.
 
 ## Branches
 

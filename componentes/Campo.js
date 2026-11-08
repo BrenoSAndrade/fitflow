@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { cores } from './tema';
 
-export default function Campo({ rotulo, valor, aoAlterar, exemplo, teclado = 'default', limite = 80, editavel = true }) {
+export default function Campo({ rotulo, valor, aoAlterar, exemplo, teclado = 'default', limite = 80, editavel = true, ocultar = false, capitalizacao = 'sentences', corrigir = true }) {
   return (
     <View style={estilos.campo}>
       <Text style={estilos.rotulo}>{rotulo}</Text>
@@ -14,6 +14,9 @@ export default function Campo({ rotulo, valor, aoAlterar, exemplo, teclado = 'de
         keyboardType={teclado}
         maxLength={limite}
         editable={editavel}
+        secureTextEntry={ocultar}
+        autoCapitalize={capitalizacao}
+        autoCorrect={corrigir}
         selectionColor={cores.verde}
         style={estilos.entrada}
       />
