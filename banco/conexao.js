@@ -8,6 +8,13 @@ async function prepararBanco() {
     PRAGMA journal_mode = WAL;
     PRAGMA foreign_keys = ON;
 
+    CREATE TABLE IF NOT EXISTS usuarios (
+      id TEXT PRIMARY KEY NOT NULL,
+      nome TEXT NOT NULL,
+      email TEXT NOT NULL UNIQUE COLLATE NOCASE,
+      perfil TEXT NOT NULL CHECK (perfil IN ('aluno', 'funcionario'))
+    );
+
     CREATE TABLE IF NOT EXISTS aulas (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       nome TEXT NOT NULL,

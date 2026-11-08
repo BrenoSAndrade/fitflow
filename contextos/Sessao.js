@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, Platform, StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { abrirBanco } from '../banco/conexao';
+import { prepararContasLocais } from '../servicos/contasLocais';
 import Botao from '../componentes/Botao';
 import { cores } from '../componentes/tema';
 import { apagarSessao, lerSessao, salvarSessao } from '../servicos/sessao';
@@ -20,7 +20,7 @@ export function ProvedorSessao({ children: conteudo }) {
     try {
       const [perfilSalvo] = await Promise.all([
         lerSessao(),
-        Platform.OS === 'web' ? Promise.resolve() : abrirBanco(),
+        Platform.OS === 'web' ? Promise.resolve() : prepararContasLocais(),
       ]);
       definirPerfil(perfilSalvo);
     } catch {
