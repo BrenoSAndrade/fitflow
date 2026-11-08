@@ -74,6 +74,19 @@ O cadastro e a grade do funcionário usam o banco, preparado ao iniciar o aplica
 
 O navegador permite conferir a interface e guarda somente o perfil de demonstração no AsyncStorage. O banco desta versão é usado no Android e no iOS. Os dados são locais e não são sincronizados entre celulares.
 
+## Contas locais
+
+As funções de contas estão preparadas, mas ainda serão conectadas ao formulário de entrada. Há duas contas de demonstração, sem cadastro de novos usuários:
+
+| Perfil | E-mail | Senha de demonstração |
+| --- | --- | --- |
+| Aluno | aluno@fitflow.com | fitflow123 |
+| Funcionário | funcionario@fitflow.com | fitflow123 |
+
+A tabela usuarios guarda identificação, nome, e-mail e perfil. As senhas ficam no SecureStore. O perfil escolhido deve corresponder à conta. A sessão da conta guarda somente sua identificação e recupera os dados pelo banco.
+
+O aluno local mantém a identificação das reservas e dos treinos de demonstração já existentes. As contas são locais ao aparelho, sem autenticação em servidor.
+
 ## Branches
 
 As funcionalidades são feitas em feature e integradas na develop por pull request. A main recebe as versões estáveis.
