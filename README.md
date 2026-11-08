@@ -56,7 +56,9 @@ O aluno pode consultar aulas futuras, reservar uma vaga e cancelar uma reserva a
 
 A entrada pede perfil, e-mail e senha das contas locais de demonstração. O perfil deve corresponder à conta. A conta conectada é recuperada ao abrir novamente o aplicativo. Use Sair para apagar a sessão. As reservas e os treinos pertencem à identificação do aluno e são mantidos ao sair.
 
-No início, o aluno pode iniciar o treino e marcar os exercícios. O progresso é recuperado ao reabrir o aplicativo. Finalizar salva o histórico e mostra a duração; descartar apaga somente o progresso atual. É necessário marcar pelo menos um exercício para finalizar. A tela de estatísticas ainda será conectada aos dados.
+No início, o aluno pode iniciar o treino e marcar os exercícios. O progresso é recuperado ao reabrir o aplicativo. Finalizar salva o histórico e mostra a duração; descartar apaga somente o progresso atual. É necessário marcar pelo menos um exercício para finalizar.
+
+As estatísticas mostram minutos por dia, dias frequentados na semana e total de treinos concluídos. A tela atualiza ao retornar, ao reabrir o aplicativo ou pelo botão Atualizar. Treinos com menos de um minuto aparecem como <1 no gráfico.
 
 ## Persistência
 
@@ -68,7 +70,7 @@ As funções de treino também guardam o início e o checklist em andamento. Ini
 
 As consultas de estatísticas retornam o total de treinos e os sete dias da semana, de segunda a domingo, com minutos e frequência. Apenas treinos concluídos entram nesses números. A duração é o tempo entre início e fim, inclusive fora do aplicativo, e é atribuída ao dia da conclusão.
 
-O progresso já está conectado ao checklist do início. As consultas das estatísticas ainda serão conectadas à tela correspondente.
+O progresso está conectado ao checklist do início e as consultas alimentam a tela de estatísticas. A frequência semanal conta dias distintos, mesmo quando há mais de um treino no mesmo dia.
 
 O cadastro e a grade do funcionário usam o banco, preparado ao iniciar o aplicativo. O formulário recebe datas no formato DD/MM/AAAA e horários no formato HH:MM. Somente aulas futuras podem ser cadastradas pelo formulário.
 
