@@ -1,15 +1,17 @@
 import { useCallback, useRef, useState } from 'react';
 import { ActivityIndicator, Alert, AppState, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { buscarTreinoEmAndamento, descartarTreino, finalizarTreino, iniciarTreino, marcarExercicio } from '../banco/treinos';
+import { buscarTreinoEmAndamento, descartarTreino, finalizarTreino, marcarExercicio } from '../banco/treinos';
+import { buscarExerciciosEscolhidos, iniciarTreinoEscolhido } from '../banco/exerciciosEscolhidos';
 import { usarSessao } from '../contextos/Sessao';
-import { formatarTempoTreino, treinoDoDia } from '../servicos/treinoDia';
+import { formatarTempoTreino } from '../servicos/treinoDia';
 import Botao from './Botao';
 import { cores } from './tema';
 
-export default function TreinoDia() {
+export default function TreinoDia({ aoEscolherExercicios }) {
   const { aluno } = usarSessao();
   const [treino, definirTreino] = useState(null);
+  const [escolha, definirEscolha] = useState([]);
   const [carregando, definirCarregando] = useState(true);
   const [salvando, definirSalvando] = useState(false);
   const [erro, definirErro] = useState('');
@@ -24,8 +26,11 @@ export default function TreinoDia() {
     if (mostrarCarregamento) definirCarregando(true);
     definirErro('');
     try {
-      const progresso = await buscarTreinoEmAndamento(aluno);
-      if (telaAtiva.current && consulta === consultaAtual.current) definirTreino(progresso);
+      const [progresso, selecionados] = await Promise.all([buscarTreinoEmAndamento(aluno), buscarExerciciosEscolhidos(aluno)]);
+      if (telaAtiva.current && consulta === consultaAtual.current) {
+        definirTreino(progresso);
+        definirEscolha(selecionados);
+      }
     } catch {
       if (telaAtiva.current && consulta === consultaAtual.current) definirErro('Não foi possível carregar o treino. Tente novamente.');
     } finally {
@@ -69,7 +74,7 @@ export default function TreinoDia() {
 
   function comecar() {
     executarOperacao(async () => {
-      await iniciarTreino(aluno, treinoDoDia.exercicios);
+      await iniciarTreinoEscolhido(aluno);
       return 'Treino iniciado.';
     });
   }
@@ -101,13 +106,12 @@ export default function TreinoDia() {
     ]);
   }
 
-  const exercicios = treino ? treino.exercicios : treinoDoDia.exercicios;
+  const exercicios = treino ? treino.exercicios : escolha;
   const concluidos = exercicios.filter((exercicio) => exercicio.concluido).length;
 
   return (
     <View style={estilos.cartao}>
       <Text style={estilos.titulo}>Treino do dia</Text>
-      <Text style={estilos.texto}>{treinoDoDia.nome}</Text>
       {carregando ? <ActivityIndicator color={cores.verde} accessibilityLabel="Carregando treino" /> : erro ? (
         <>
           <Text accessibilityRole="alert" style={estilos.texto}>{erro}</Text>
@@ -118,12 +122,12 @@ export default function TreinoDia() {
           {treino ? <Text style={estilos.texto}>Iniciado em {new Date(treino.inicio).toLocaleString('pt-BR')}</Text> : null}
           {exercicios.map((exercicio, posicao) => (
             <Pressable key={posicao} accessibilityRole="checkbox"
-              accessibilityLabel={`${exercicio.nome}, ${exercicio.series} séries de ${exercicio.repeticoes} repetições`}
+              accessibilityLabel={`${exercicio.nome}, ${exercicio.series} séries${exercicio.repeticoes ? ` de ${exercicio.repeticoes} repetições` : ''}`}
               accessibilityState={{ checked: exercicio.concluido === true, disabled: !treino || salvando || somenteLeitura }}
               disabled={!treino || salvando || somenteLeitura}
               onPress={() => marcar(posicao, !exercicio.concluido)} style={estilos.exercicio}>
               <View style={[estilos.caixa, exercicio.concluido && estilos.marcada]} />
-              <Text style={estilos.nome}>{exercicio.nome} {exercicio.series}x{exercicio.repeticoes}</Text>
+              <Text style={estilos.nome}>{exercicio.nome}: {exercicio.series} séries{exercicio.repeticoes ? ` de ${exercicio.repeticoes} repetições` : ''}</Text>
             </Pressable>
           ))}
           {mensagem ? <Text accessibilityLiveRegion="polite" style={estilos.texto}>{mensagem}</Text> : null}
@@ -134,7 +138,13 @@ export default function TreinoDia() {
               <Botao titulo={salvando ? 'Salvando...' : 'Finalizar treino'} desabilitado={salvando || concluidos === 0} aoPressionar={confirmarFinalizacao} />
               <Botao titulo="Descartar treino" secundario desabilitado={salvando} aoPressionar={confirmarDescarte} />
             </>
-          ) : <Botao titulo={salvando ? 'Iniciando...' : 'Iniciar treino'} desabilitado={salvando} aoPressionar={comecar} />}
+          ) : (
+            <>
+              {!escolha.length ? <Text style={estilos.texto}>Escolha os exercícios e informe as séries antes de iniciar.</Text> : null}
+              <Botao titulo={escolha.length ? 'Alterar exercícios' : 'Escolher exercícios'} secundario={escolha.length > 0} desabilitado={salvando} aoPressionar={aoEscolherExercicios} />
+              {escolha.length ? <Botao titulo={salvando ? 'Iniciando...' : 'Iniciar treino'} desabilitado={salvando} aoPressionar={comecar} /> : null}
+            </>
+          )}
         </>
       )}
     </View>

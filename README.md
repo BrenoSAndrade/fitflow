@@ -58,6 +58,10 @@ A entrada pede perfil, e-mail e senha das contas locais de demonstração. O per
 
 No início, o aluno pode iniciar o treino e marcar os exercícios. O progresso é recuperado ao reabrir o aplicativo. Finalizar salva o histórico e mostra a duração; descartar apaga somente o progresso atual. É necessário marcar pelo menos um exercício para finalizar.
 
+Antes de iniciar um novo treino, use Escolher exercícios. O catálogo consulta o wger em português e mostra nome e descrição, sem imagens. Selecione os exercícios, informe as séries e salve. A seleção pode ser reutilizada e funciona sem nova consulta à internet depois de salva.
+
+O catálogo carrega 20 registros por vez e permite buscar mais. Em caso de falha de conexão, há uma opção para tentar novamente. A seleção já salva não é apagada pela falha da consulta. Os textos exibem os autores informados pelo serviço e um acesso à fonte.
+
 As estatísticas mostram minutos por dia, dias frequentados na semana e total de treinos concluídos. A tela atualiza ao retornar, ao reabrir o aplicativo ou pelo botão Atualizar. Treinos com menos de um minuto aparecem como <1 no gráfico.
 
 ## Persistência
@@ -82,7 +86,9 @@ A camada de dados permite salvar uma seleção por aluno com identificação do 
 
 Um treino iniciado mantém sua própria cópia dos exercícios e das séries. Alterar ou apagar a seleção não muda esse treino nem seu histórico. A escolha é mantida depois da finalização para poder ser usada novamente.
 
-Os treinos antigos continuam guardando suas repetições. A nova seleção não exige configurar repetições. As funções estão em banco/exerciciosEscolhidos.js e ainda serão conectadas ao catálogo e à tela de escolha.
+Os treinos antigos continuam guardando suas repetições. A nova seleção pede somente séries. As funções em banco/exerciciosEscolhidos.js alimentam a tela de escolha e o início do treino. Um treino antigo em andamento é recuperado com seus exercícios originais.
+
+Fonte do catálogo: https://wger.de/api/v2/exercise-translation/?language=7
 
 ## Contas locais
 

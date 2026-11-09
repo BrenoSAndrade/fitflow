@@ -55,7 +55,7 @@ export default function Inicio({ navigation: navegacao }) {
           ) : <Text style={estilos.texto}>Você ainda não tem uma próxima aula reservada.</Text>}
         </View>
       ) : <Text style={estilos.texto}>Suas reservas ficam disponíveis no aplicativo do celular.</Text>}
-      <TreinoDia />
+      <TreinoDia aoEscolherExercicios={() => navegacao.navigate('Escolher exercícios')} />
       <Botao titulo="Ver aulas" aoPressionar={() => navegacao.navigate('Aulas')} />
       <Botao titulo="Ver estatísticas" secundario aoPressionar={() => navegacao.navigate('Estatísticas')} />
     </Tela>
