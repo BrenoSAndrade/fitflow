@@ -34,10 +34,22 @@ export function validarExercicios(exercicios) {
   if (!Array.isArray(exercicios) || !exercicios.length) {
     throw new Error('Informe os exercícios do treino.');
   }
-  return exercicios.map((exercicio) => ({
-    nome: validarTexto(exercicio?.nome, 'o nome do exercício'),
-    series: validarNumero(exercicio?.series, 'a quantidade de séries'),
-    repeticoes: validarNumero(exercicio?.repeticoes, 'a quantidade de repetições'),
-    concluido: exercicio.concluido === true,
-  }));
+  return exercicios.map((exercicio) => {
+    const validado = {
+      nome: validarTexto(exercicio?.nome, 'o nome do exercício'),
+      series: validarNumero(exercicio?.series, 'a quantidade de séries'),
+      concluido: exercicio.concluido === true,
+    };
+    if (exercicio.repeticoes !== undefined) {
+      validado.repeticoes = validarNumero(exercicio.repeticoes, 'a quantidade de repetições');
+    }
+    if (exercicio.idExterno !== undefined) {
+      validado.idExterno = validarNumero(exercicio.idExterno, 'a identificação do exercício');
+    }
+    if (exercicio.descricao !== undefined) {
+      if (typeof exercicio.descricao !== 'string') throw new Error('Informe uma descrição válida.');
+      validado.descricao = exercicio.descricao.trim();
+    }
+    return validado;
+  });
 }

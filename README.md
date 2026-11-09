@@ -76,6 +76,14 @@ O cadastro e a grade do funcionário usam o banco, preparado ao iniciar o aplica
 
 O navegador permite conferir o formulário de entrada. O login e o banco desta versão são usados no Android e no iOS. Os dados são locais e não são sincronizados entre celulares.
 
+## Exercícios escolhidos
+
+A camada de dados permite salvar uma seleção por aluno com identificação do exercício, nome, descrição e séries. A seleção é recuperada ao reabrir o aplicativo e mantém a ordem escolhida. Séries devem ser números inteiros maiores que zero; exercícios repetidos não são aceitos.
+
+Um treino iniciado mantém sua própria cópia dos exercícios e das séries. Alterar ou apagar a seleção não muda esse treino nem seu histórico. A escolha é mantida depois da finalização para poder ser usada novamente.
+
+Os treinos antigos continuam guardando suas repetições. A nova seleção não exige configurar repetições. As funções estão em banco/exerciciosEscolhidos.js e ainda serão conectadas ao catálogo e à tela de escolha.
+
 ## Contas locais
 
 Há duas contas de demonstração para usar no formulário de entrada, sem cadastro de novos usuários:

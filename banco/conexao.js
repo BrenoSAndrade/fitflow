@@ -49,6 +49,11 @@ async function prepararBanco() {
     );
 
     CREATE INDEX IF NOT EXISTS treinos_aluno_data ON treinos (aluno, data);
+
+    CREATE TABLE IF NOT EXISTS exercicios_escolhidos (
+      aluno TEXT PRIMARY KEY NOT NULL,
+      exercicios TEXT NOT NULL
+    );
   `);
   return banco;
 }
