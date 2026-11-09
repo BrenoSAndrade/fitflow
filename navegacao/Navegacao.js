@@ -10,6 +10,7 @@ import AulasAluno from '../telas/AulasAluno';
 import Estatisticas from '../telas/Estatisticas';
 import GradeAulas from '../telas/GradeAulas';
 import CriarAula from '../telas/CriarAula';
+import EscolherExercicios from '../telas/EscolherExercicios';
 
 const Pilha = createNativeStackNavigator();
 const Abas = createBottomTabNavigator();
@@ -51,7 +52,10 @@ export default function Navegacao() {
         {!perfil ? (
           <Pilha.Screen name="Entrada" component={Entrada} options={{ headerShown: false }} />
         ) : perfil === 'aluno' ? (
-          <Pilha.Screen name="Aluno" component={AbasAluno} options={{ title: 'FitFlow' }} />
+          <Pilha.Group>
+            <Pilha.Screen name="Aluno" component={AbasAluno} options={{ title: 'FitFlow' }} />
+            <Pilha.Screen name="Escolher exercícios" component={EscolherExercicios} />
+          </Pilha.Group>
         ) : (
           <Pilha.Group>
             <Pilha.Screen name="Grade" component={GradeAulas} options={{ title: 'FitFlow' }} />
