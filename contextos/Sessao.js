@@ -1,10 +1,11 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Alert, Platform, StyleSheet, Text } from 'react-native';
+import { ActivityIndicator, Alert, AppState, Platform, StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { autenticarUsuario, encerrarSessaoUsuario, prepararContasLocais, recuperarUsuario } from '../servicos/contasLocais';
 import Botao from '../componentes/Botao';
 import { cores } from '../componentes/tema';
 import { apagarSessao } from '../servicos/sessao';
+import { sincronizarLembretes } from '../servicos/lembretes';
 
 const ContextoSessao = createContext(null);
 
@@ -33,6 +34,16 @@ export function ProvedorSessao({ children: conteudo }) {
   useEffect(() => {
     carregarDados();
   }, []);
+
+  useEffect(() => {
+    if (!usuario || Platform.OS === 'web') return;
+    const atualizar = () => { sincronizarLembretes().catch(() => {}); };
+    atualizar();
+    const inscricao = AppState.addEventListener('change', (estado) => {
+      if (estado === 'active') atualizar();
+    });
+    return () => inscricao.remove();
+  }, [usuario]);
 
   async function entrar(email, senha, perfilEscolhido) {
     if (operacaoEmAndamento.current) return false;

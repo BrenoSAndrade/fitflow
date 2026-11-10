@@ -80,6 +80,18 @@ O cadastro e a grade do funcionário usam o banco, preparado ao iniciar o aplica
 
 O navegador permite conferir o formulário de entrada. O login e o banco desta versão são usados no Android e no iOS. Os dados são locais e não são sincronizados entre celulares.
 
+## Lembretes de aulas
+
+Na tela Aulas do aluno, o interruptor Lembretes de aulas permite ativar ou desativar as notificações locais deste aparelho. A preferência começa desligada. A permissão só é solicitada ao ativar.
+
+O lembrete é agendado para dez minutos antes da aula reservada. Se a reserva for feita com menos antecedência, o aviso é agendado para poucos segundos depois, antes do início da aula. Os horários usam o fuso local do aparelho.
+
+Cancelar a reserva ou excluir a aula remove seus lembretes. Desativar o interruptor remove os avisos do FitFlow; ativar novamente considera as reservas futuras já existentes. Reabrir o app confere os agendamentos sem repetir avisos que já foram entregues. O botão Atualizar lembretes permite tentar novamente em caso de falha.
+
+As reservas continuam funcionando sem permissão para notificações. Se o sistema falhar ao atualizar um aviso, a tela informa que a reserva ou exclusão foi concluída e que o lembrete precisa ser atualizado.
+
+Os lembretes não precisam de internet depois de agendados. A entrega real depende das permissões e configurações do sistema. Para um teste rápido, ative os lembretes e reserve uma aula que comece nos próximos minutos. Confira também o cancelamento e a desativação.
+
 ## Exercícios escolhidos
 
 A camada de dados permite salvar uma seleção por aluno com identificação do exercício, nome, descrição e séries. A seleção é recuperada ao reabrir o aplicativo e mantém a ordem escolhida. Séries devem ser números inteiros maiores que zero; exercícios repetidos não são aceitos.

@@ -26,6 +26,15 @@ export async function listarGrade() {
   `);
 }
 
+export async function listarReservasParaLembretes() {
+  const banco = await abrirBanco();
+  return banco.getAllAsync(`
+    SELECT aulas.id, aulas.nome, aulas.data, aulas.horario, reservas.aluno
+    FROM reservas INNER JOIN aulas ON aulas.id = reservas.aula_id
+    ORDER BY aulas.data, aulas.horario
+  `);
+}
+
 export async function listarAulas(aluno) {
   const alunoValido = validarTexto(aluno, 'o aluno');
   const banco = await abrirBanco();
