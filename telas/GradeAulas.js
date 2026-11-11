@@ -1,7 +1,8 @@
 import { useCallback, useRef, useState } from 'react';
 import { ActivityIndicator, Alert, Platform, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { excluirAula, listarGrade } from '../banco/aulas';
+import { listarGrade } from '../banco/aulas';
+import { excluirComLembretes } from '../servicos/reservasComLembretes';
 import Tela from '../componentes/Tela';
 import Botao from '../componentes/Botao';
 import { cores } from '../componentes/tema';
@@ -45,7 +46,8 @@ export default function GradeAulas({ navigation: navegacao }) {
     definirExcluindo(aula.id);
     definirErro('');
     try {
-      await excluirAula(aula.id);
+      const { aviso } = await excluirComLembretes(aula.id);
+      if (aviso && telaAtiva.current) Alert.alert('Aula excluída', aviso);
       if (telaAtiva.current) await carregarAulas();
     } catch {
       if (telaAtiva.current) definirErro('Não foi possível excluir a aula. Tente novamente.');

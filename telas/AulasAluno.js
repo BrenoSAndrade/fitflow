@@ -1,7 +1,8 @@
 import { useCallback, useRef, useState } from 'react';
 import { ActivityIndicator, Alert, Platform, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { cancelarReserva, reservarAula } from '../banco/aulas';
+import { cancelarComLembrete, reservarComLembrete } from '../servicos/reservasComLembretes';
+import PreferenciasLembretes from '../componentes/PreferenciasLembretes';
 import Botao from '../componentes/Botao';
 import Tela from '../componentes/Tela';
 import { cores } from '../componentes/tema';
@@ -52,11 +53,11 @@ export default function AulasAluno() {
     let retorno;
     try {
       if (aula.reservada) {
-        const cancelada = await cancelarReserva(aula.id, aluno);
-        retorno = cancelada ? 'Reserva cancelada.' : 'Essa reserva já havia sido cancelada.';
+        const { resultado, aviso } = await cancelarComLembrete(aula.id, aluno);
+        retorno = `${resultado ? 'Reserva cancelada.' : 'Essa reserva já havia sido cancelada.'}${aviso ? ` ${aviso}` : ''}`;
       } else {
-        await reservarAula(aula.id, aluno);
-        retorno = 'Reserva confirmada.';
+        const { aviso } = await reservarComLembrete(aula.id, aluno);
+        retorno = `Reserva confirmada.${aviso ? ` ${aviso}` : ''}`;
       }
     } catch {
       retorno = aula.reservada
@@ -85,6 +86,7 @@ export default function AulasAluno() {
 
   return (
     <Tela titulo="Aulas" descricao="Escolha uma aula e reserve sua vaga.">
+      <PreferenciasLembretes />
       {mensagem ? <Text accessibilityLiveRegion="polite" style={estilos.mensagem}>{mensagem}</Text> : null}
       {carregando ? <ActivityIndicator color={cores.verde} size="large" accessibilityLabel="Carregando aulas" /> : null}
       {erro ? (
